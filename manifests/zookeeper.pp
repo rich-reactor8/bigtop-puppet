@@ -14,11 +14,13 @@
 # limitations under the License.
 
 class bigtop::zookeeper(
-  $ensemble = ['localhost'],
-  $kerberos_realm = undef
+  $ensemble = ['localhost'], #TODO: alternative is to have this be $bigtop::params::ensemble
+  $kerberos_realm = hiera('bigtop::kerberos_realm',$bigtop::params::kerberos_realm)
 ) inherits bigtop::zookeeper::params {
 
   include bigtop
+
+  notice("kerberos_realm = ${kerberos_realm}")
 
   package { "zookeeper":
     ensure => latest,
