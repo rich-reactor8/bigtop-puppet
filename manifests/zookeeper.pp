@@ -14,9 +14,11 @@
 # limitations under the License.
 
 class bigtop::zookeeper(
-  $ensemble       = $bigtop::zookeeper::params::ensemble,
-  $kerberos_realm = $bigtop::zookeeper::params::kerberos_realm,
+  $ensemble = ['localhost'],
+  $kerberos_realm = undef
 ) inherits bigtop::zookeeper::params {
+
+  include bigtop
 
   package { "zookeeper":
     ensure => latest,

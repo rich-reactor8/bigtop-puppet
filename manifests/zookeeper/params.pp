@@ -13,7 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class bigtop::zookeeper::params inherits bigtop {
-  $ensemble = hiera_array('bigtop::zookeeper::server', ['localhost'])
-  $myid     = inline_template("<%= ensemble.index(ipaddress).to_i.to_s %>")
+class bigtop::zookeeper::params inherits bigtop::params {
 }
