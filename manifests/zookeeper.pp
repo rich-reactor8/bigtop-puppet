@@ -14,22 +14,24 @@
 # limitations under the License.
 
 class bigtop::zookeeper(
-  $ensemble = ['localhost'],
-  $kerberos_realm = undef
+  $ensemble = ['localhost'], #TODO: alternative is to have this be $bigtop::params::ensemble
+  $kerberos_realm = hiera('bigtop::kerberos_realm',$bigtop::params::kerberos_realm)
 ) inherits bigtop::zookeeper::params {
 
   include bigtop
+
+  notice("kerberos_realm = ${kerberos_realm}")
 
   package { "zookeeper":
     ensure => latest,
   } 
 
   file { "/etc/zookeeper/conf/zoo.cfg":
-    content => template("bigtop/zookeeper/zoo.cfg"),
+    content => template("bigtop/zookeeper/zoo.cfg.erb"),
     require => Package["zookeeper"],
   }
 
-  if ($kerberos_realm) {
+  if ($kerberos_realm != '') {
     #kerberos::host_keytab { "zookeeper":
     #  spnego => true,
     #}
@@ -41,7 +43,7 @@ class bigtop::zookeeper(
     }
 
     file { "/etc/zookeeper/conf/jaas.conf":
-      content => template("bigtop/zookeeper/jaas.conf"),
+      content => template("bigtop/zookeeper/jaas.conf.erb"),
       require => Package["zookeeper-server"],
       notify  => Service["zookeeper-server"],
     }

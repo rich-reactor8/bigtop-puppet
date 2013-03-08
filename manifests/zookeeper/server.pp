@@ -24,7 +24,6 @@ class bigtop::zookeeper::server(
   $kerberos_realm = hiera('bigtop::zookeeper::kerberos_realm',$bigtop::kerberos_realm) 
 
   notice("myid = ${myid}")
-  notice("kerberos_realm = ${kerberos_realm}")
 
   package { "zookeeper-server":
     ensure => latest,
