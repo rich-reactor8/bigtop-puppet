@@ -18,10 +18,8 @@ class bigtop::zookeeper::server(
 {
   include bigtop::zookeeper
 
-  #$myid is here as opposed to in parameter part because it was function of another parameter
   $ensemble = $bigtop::zookeeper::ensemble
   $myid = inline_template("<%= ensemble.index(ipaddress).to_i.to_s %>")
-  $kerberos_realm = hiera('bigtop::zookeeper::kerberos_realm',$bigtop::kerberos_realm) 
 
   notice("myid = ${myid}")
 
