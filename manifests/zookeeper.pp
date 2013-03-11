@@ -14,12 +14,11 @@
 # limitations under the License.
 
 class bigtop::zookeeper(
-  $ensemble = hiera('bigtop::zookeeper::ensemble',['localhost']) #2nd arg could be a constant in bigtop::zookeeper::params
 ) inherits bigtop::zookeeper::params {
 
   include bigtop
-
-  $kerberos_realm = hiera('bigtop::zookeeper::kerberos_realm',$bigtop::kerberos_realm)
+  $ensemble = hiera('bigtop::zookeeper::ensemble',['localhost']) #2nd arg could be a constant in bigtop::zookeeper::params
+  $kerberos_realm = hiera('bigtop::zookeeper::kerberos_realm',$::bigtop::kerberos_realm)
 
   notice("kerberos_realm = ${kerberos_realm}")
 

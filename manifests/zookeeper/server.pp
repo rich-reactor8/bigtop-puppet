@@ -18,7 +18,7 @@ class bigtop::zookeeper::server(
 {
   include bigtop::zookeeper
 
-  $ensemble = $bigtop::zookeeper::ensemble
+  $ensemble = $::bigtop::zookeeper::ensemble
   $myid = inline_template("<%= ensemble.index(ipaddress).to_i.to_s %>")
 
   notice("myid = ${myid}")
